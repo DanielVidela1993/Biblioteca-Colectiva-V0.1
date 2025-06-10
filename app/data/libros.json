@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "autor": "dos",
+        "titulo": "dos",
+        "anio": 1456,
+        "genero": "Aventura",
+        "propietario": "daniel@gmail.com"
+    },
+    {
+        "id": 2,
+        "autor": "tres",
+        "titulo": "tres",
+        "anio": 1456,
+        "genero": "Aventura",
+        "propietario": "marcos@gmail.com"
+    },
+    {
+        "id": 3,
+        "autor": "dios",
+        "titulo": "tierra",
+        "anio": 1456,
+        "genero": "Aventura",
+        "propietario": "marcos@gmail.com"
+    }
+]
