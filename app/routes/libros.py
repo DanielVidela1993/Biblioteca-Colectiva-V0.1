@@ -1,14 +1,15 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas.schemas import LibroIn, LibroOut, UsuarioOut
 from app.models.models import Libro
+from app.controllers.book_controller import buscar_libros_controller
 from app.services import libro_service
 
-router = APIRouter(prefix="/libros", tags=["Libros"])
+router = APIRouter(prefix="/books", tags=["Books"])
 
-@router.get("/", response_model=list[Libro])
-def listar_libros(correo: str):
-    return libro_service.obtener_libros_por_usuario(correo)
-
+@router.get("/search")
+def search(author: str = None, title: str = None, year: int = None, genre: str = None):
+    return buscar_libros_controller(author, title, year, genre)
+    
 @router.post("/", response_model=Libro)
 def agregar(libro: LibroIn, correo: str):
     nuevo = Libro(id=0, propietario=correo, **libro.dict())
@@ -33,6 +34,6 @@ def buscar(filtro: str, valor: str):
     for libro in libros:
         resultados.append({
             "libro": libro,
-            "usuario": libro.propietario  # Solo se muestra el correo, por simplicidad
+            "usuario": libro.propietario 
         })
     return resultados

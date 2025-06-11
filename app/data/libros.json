@@ -22,5 +22,13 @@
         "anio": 1456,
         "genero": "Aventura",
         "propietario": "marcos@gmail.com"
+    },
+    {
+        "id": 4,
+        "autor": "perro",
+        "titulo": "guau",
+        "anio": 2345,
+        "genero": "aventura",
+        "propietario": "daniel@gmail.com"
     }
 ]

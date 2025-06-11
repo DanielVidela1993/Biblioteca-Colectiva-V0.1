@@ -1,33 +1,34 @@
-from app.utils.json_handler import leer_json, escribir_json
+from app.utils.json_handler import leer_json
 from app.models.models import Libro
-from typing import List, Optional
+from typing import Optional, List, Dict
 
-RUTA = "app/data/libros.json"
+RUTA_LIBROS = "app/data/libros.json"
+RUTA_USUARIOS = "app/data/usuarios.json"
 
-def obtener_libros_por_usuario(correo: str) -> List[Libro]:
-    return [Libro(**l) for l in leer_json(RUTA) if l["propietario"] == correo]
+def buscar_libros(author: Optional[str] = None,
+                  title: Optional[str] = None,
+                  year: Optional[int] = None,
+                  genre: Optional[str] = None) -> List[Dict]:
+    libros = leer_json(RUTA_LIBROS)
+    usuarios = leer_json(RUTA_USUARIOS)
 
-def agregar_libro(libro: Libro) -> Libro:
-    libros = leer_json(RUTA)
-    libro.id = max([l["id"] for l in libros], default=0) + 1
-    libros.append(libro.dict())
-    escribir_json(RUTA, libros)
-    return libro
+    resultados = []
+    for libro in libros:
+        if author and author.lower() not in libro.get("autor", "").lower():
+            continue
+        if title and title.lower() not in libro.get("titulo", "").lower():
+            continue
+        if year and int(libro.get("anio", 0)) != year:
+            continue
+        if genre and genre.lower() not in libro.get("genero", "").lower():
+            continue
+        
+        # Buscar usuario propietario
+        usuario_propietario = next((u for u in usuarios if u["correo"] == libro["propietario"]), None)
 
-def eliminar_libro(libro_id: int, correo: str) -> None:
-    libros = leer_json(RUTA)
-    libros_filtrados = [l for l in libros if not (l["id"] == libro_id and l["propietario"] == correo)]
-    escribir_json(RUTA, libros_filtrados)
+        resultados.append({
+            "libro": libro,
+            "usuario": usuario_propietario
+        })
 
-def editar_libro(libro_id: int, datos: dict, correo: str) -> Optional[Libro]:
-    libros = leer_json(RUTA)
-    for l in libros:
-        if l["id"] == libro_id and l["propietario"] == correo:
-            l.update(datos)
-            escribir_json(RUTA, libros)
-            return Libro(**l)
-    return None
-
-def buscar_libros(filtro: str, valor: str) -> List[Libro]:
-    libros = leer_json(RUTA)
-    return [Libro(**l) for l in libros if valor.lower() in str(l.get(filtro, "")).lower()]
+    return resultados
