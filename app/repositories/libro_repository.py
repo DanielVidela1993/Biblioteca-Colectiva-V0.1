@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional
-from app.utils.json_handler import leer_json, guardar_json
+from app.utils.json_handler import leer_json, escribir_json
 
 RUTA_LIBROS = "app/data/libros.json"
 RUTA_USUARIOS = "app/data/usuarios.json"

@@ -1,4 +1,4 @@
-from app.utils.json_handler import leer_json, guardar_json
+from app.utils.json_handler import leer_json, escribir_json
 from app.models.models import Usuario
 from typing import List
 

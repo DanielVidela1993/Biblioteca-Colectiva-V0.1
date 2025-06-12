@@ -3,28 +3,20 @@ from typing import Any
 
 def leer_json(ruta: str) -> Any:
     """
-    Lee un archivo JSON y devuelve su contenido como un objeto de Python.
-    
-    :param ruta: Ruta al archivo JSON.
-    :return: Datos cargados desde el archivo JSON.
+    Lee datos desde un archivo JSON y devuelve los datos en formato Python (lista o dict).
+    Si el archivo no existe o está vacío/corrupto, devuelve una lista vacía para evitar errores.
     """
     try:
         with open(ruta, "r", encoding="utf-8") as archivo:
             return json.load(archivo)
-    except FileNotFoundError:
-        # Si el archivo no existe, devolver una lista vacía (o dict vacío según contexto)
-        return []
-    except json.JSONDecodeError:
-        # Si el JSON está corrupto o vacío, devolver lista vacía para evitar errores
+    except (FileNotFoundError, json.JSONDecodeError):
         return []
 
-def guardar_json(ruta: str, datos: Any) -> None:
+def escribir_json(ruta: str, datos: Any) -> None:
     """
-    Guarda datos en un archivo JSON.
-    
-    :param ruta: Ruta al archivo JSON.
-    :param datos: Datos a guardar (lista, dict, etc.).
+    Escribe datos (lista o dict) en un archivo JSON con indentado legible y codificación UTF‑8.
     """
     with open(ruta, "w", encoding="utf-8") as archivo:
         json.dump(datos, archivo, indent=4, ensure_ascii=False)
+
 
