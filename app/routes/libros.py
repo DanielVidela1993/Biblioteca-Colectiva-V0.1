@@ -1,39 +1,36 @@
-from fastapi import APIRouter, HTTPException
-from app.schemas.schemas import LibroIn, LibroOut, UsuarioOut
+from fastapi import APIRouter, Query, HTTPException
+from typing import Optional
+from app.controllers.book_controller import (
+    buscar_libros_controller,
+    agregar_libro_controller,
+    eliminar_libro_controller,
+    editar_libro_controller
+)
 from app.models.models import Libro
-from app.controllers.book_controller import buscar_libros_controller
-from app.services import libro_service
 
-router = APIRouter(prefix="/books", tags=["Books"])
+router = APIRouter(prefix="/books", tags=["Libros"])
 
-@router.get("/search")
-def search(author: str = None, title: str = None, year: int = None, genre: str = None):
-    return buscar_libros_controller(author, title, year, genre)
-    
-@router.post("/", response_model=Libro)
-def agregar(libro: LibroIn, correo: str):
-    nuevo = Libro(id=0, propietario=correo, **libro.dict())
-    return libro_service.agregar_libro(nuevo)
+@router.get("/buscar/")
+async def buscar_libros(
+    author: Optional[str] = Query(None, description="Filtrar por autor"),
+    title: Optional[str] = Query(None, description="Filtrar por título"),
+    year: Optional[int] = Query(None, description="Filtrar por año"),
+    genre: Optional[str] = Query(None, description="Filtrar por género")
+):
+    resultados = buscar_libros_controller(author, title, year, genre)
+    return {"resultados": resultados}
 
-@router.delete("/{libro_id}")
-def eliminar(libro_id: int, correo: str):
-    libro_service.eliminar_libro(libro_id, correo)
-    return {"mensaje": "Libro eliminado"}
+@router.post("/agregar/")
+async def agregar_libro(libro: Libro):
+    resultado = agregar_libro_controller(libro)
+    return resultado
 
-@router.put("/{libro_id}", response_model=Libro)
-def editar(libro_id: int, libro: LibroIn, correo: str):
-    editado = libro_service.editar_libro(libro_id, libro.dict(), correo)
-    if not editado:
-        raise HTTPException(status_code=404, detail="Libro no encontrado o no autorizado")
-    return editado
+@router.delete("/eliminar/")
+async def eliminar_libro(titulo: str, propietario: str):
+    resultado = eliminar_libro_controller(titulo, propietario)
+    return resultado
 
-@router.get("/buscar/", response_model=list)
-def buscar(filtro: str, valor: str):
-    libros = libro_service.buscar_libros(filtro, valor)
-    resultados = []
-    for libro in libros:
-        resultados.append({
-            "libro": libro,
-            "usuario": libro.propietario 
-        })
-    return resultados
+@router.put("/editar/")
+async def editar_libro(titulo: str, propietario: str, datos_actualizados: dict):
+    resultado = editar_libro_controller(titulo, propietario, datos_actualizados)
+    return resultado

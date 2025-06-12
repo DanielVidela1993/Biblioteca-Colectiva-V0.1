@@ -69,7 +69,7 @@ biblioteca-colectiva/
 - pip install uvicorn
 4- Ejecuta el servidor:
 
-uvicorn main:app --reload
+python -m uvicorn main:app --reload
 
 5- Abre la documentación interactiva de tu API:
 

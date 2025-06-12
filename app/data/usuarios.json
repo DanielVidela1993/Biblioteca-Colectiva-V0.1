@@ -10,5 +10,11 @@
         "telefono": "2613071712",
         "correo": "marcos@gmail.com",
         "contrasena": "1234"
+    },
+    {
+        "nombre": "sonia",
+        "telefono": "2641545",
+        "correo": "sonia@gmail.com",
+        "contrasena": "sonia1234"
     }
 ]

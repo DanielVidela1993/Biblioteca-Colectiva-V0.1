@@ -30,5 +30,29 @@
         "anio": 2345,
         "genero": "aventura",
         "propietario": "daniel@gmail.com"
+    },
+    {
+        "id": 0,
+        "autor": "Daniel",
+        "titulo": "Alejandro",
+        "anio": 1993,
+        "genero": "aventura",
+        "propietario": "daniel@gmail.com"
+    },
+    {
+        "id": 0,
+        "autor": "Daniel",
+        "titulo": "Alejandro",
+        "anio": 1993,
+        "genero": "aventura",
+        "propietario": "daniel@gmail.com"
+    },
+    {
+        "id": 0,
+        "autor": "Daniel",
+        "titulo": "Alejandro",
+        "anio": 1993,
+        "genero": "aventura",
+        "propietario": "sonia@gmail.com"
     }
 ]
