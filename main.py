@@ -6,7 +6,6 @@ import os
 
 load_dotenv()
 
-# Logging config
 logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
 logger = logging.getLogger(__name__)
 logger.info("Servidor iniciado")

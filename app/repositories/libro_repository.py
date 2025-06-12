@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional
-from app.utils.json_handler import leer_json, escribir_json
+from app.utils.json_handler import leer_json, escribir_json as guardar_json
 
 RUTA_LIBROS = "app/data/libros.json"
 RUTA_USUARIOS = "app/data/usuarios.json"
@@ -32,13 +32,19 @@ def buscar_libros(author: Optional[str] = None,
 
 def agregar_libro(nuevo_libro: Dict) -> Dict:
     libros = leer_json(RUTA_LIBROS)
+
     for libro in libros:
         if libro.get("titulo", "").lower() == nuevo_libro.get("titulo", "").lower() and \
            libro.get("propietario") == nuevo_libro.get("propietario"):
             raise ValueError("El libro ya existe para este propietario.")
+
+    nuevo_id = max([libro.get("id", 0) for libro in libros], default=0) + 1
+    nuevo_libro["id"] = nuevo_id
+
     libros.append(nuevo_libro)
     guardar_json(RUTA_LIBROS, libros)
     return nuevo_libro
+
 
 def eliminar_libro(titulo: str, propietario: str) -> None:
     libros = leer_json(RUTA_LIBROS)

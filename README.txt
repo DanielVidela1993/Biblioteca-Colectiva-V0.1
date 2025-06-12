@@ -75,3 +75,15 @@ python -m uvicorn main:app --reload
 
 Swagger UI: http://127.0.0.1:8000/docs
 
+
+source venv/Scripts/activate
+python -m uvicorn main:app --reload
+
+# Agregar todos los archivos modificados y nuevos
+git add .
+
+# Confirmar con un mensaje claro
+git commit -m "Actualizo controlador y servicio de libros, README, y archivos JSON"
+
+# Subir al repositorio remoto en la rama master
+git push origin master

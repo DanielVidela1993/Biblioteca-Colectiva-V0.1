@@ -12,8 +12,8 @@ class UsuarioOut(BaseModel):
     correo: str
 
 class LibroIn(BaseModel):
-    autor: str
     titulo: str
+    autor: str
     anio: int
     genero: str
 
