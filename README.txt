@@ -14,7 +14,6 @@ De esta forma podrá contactarse con la persona dueña del libro.
 ## Funciones
 
 -Crear usuario
--Lista de libros
 -Editar libro
 -Eliminar libro
 -Buscar libro(autor, titulo, año, genero)
@@ -64,7 +63,7 @@ Biblioteca-Colectiva-V0.1/
 │       └── usuarios.json            # Base de datos simulada de usuarios
 │
 ├── .env                             # Variables de entorno 
-├── main.py                          # Punto de entrada del proyecto (inicia FastAPI)
+├── main.py                          # Punto de entrada del proyecto 
 ├── requirements.txt                 # Lista de dependencias del proyecto
 ├── README.md                        # Documentación general del proyecto
 └── .gitignore                       # Archivos y carpetas que git debe ignorar
