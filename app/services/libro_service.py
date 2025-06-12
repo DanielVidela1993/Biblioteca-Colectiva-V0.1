@@ -22,24 +22,19 @@ def buscar_libros(author: Optional[str] = None,
             continue
         if genre and genre.lower() not in libro.get("genero", "").lower():
             continue
-        
-        usuario_propietario = next((u for u in usuarios if u["correo"] == libro["propietario"]), None)
 
-        if usuario_propietario:
-            usuario_filtrado = {
-                "nombre": usuario_propietario.get("nombre"),
-                "correo": usuario_propietario.get("correo"),
-                "telefono": usuario_propietario.get("telefono")
-            }
-        else:
-            usuario_filtrado = None
+        usuario_propietario = next((u for u in usuarios if u["correo"] == libro["propietario"]), None)
 
         resultados.append({
             "libro": libro,
-            "usuario": usuario_filtrado
+            "usuario": {
+                "nombre": usuario_propietario.get("nombre") if usuario_propietario else None,
+                "correo": usuario_propietario.get("correo") if usuario_propietario else None,
+                "telefono": usuario_propietario.get("telefono") if usuario_propietario else None,
+            }
         })
 
-    return resultado
+    return resultados
 
 def agregar_libro(libro: dict) -> dict:
     libros = leer_json(RUTA_LIBROS)
