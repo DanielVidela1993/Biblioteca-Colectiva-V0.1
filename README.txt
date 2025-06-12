@@ -33,24 +33,41 @@ De esta forma podrá contactarse con la persona dueña del libro.
 
 ## Estructura de carpetas:
 
-biblioteca-colectiva/
+Biblioteca-Colectiva-V0.1/
 │
-├── .env                     # Archivo para variables de entorno
-├── README.txt # Documentación del proyecto
-├── main.py             # Punto de entrada principal de la aplicación
-├── app/
-│   ├── __init__.py         # Hace que app sea un paquete Python
+├── app/                             # Lógica principal del proyecto
+│   ├── controllers/                 # Controladores que manejan la lógica HTTP
+│   │   ├── libros_controller.py     # Endpoints relacionados con libros
+│   │   └── usuarios_controller.py   # Endpoints relacionados con usuarios
 │   │
-│   ├── data/               # Datos persistentes
+│   ├── models/                      # Modelos de datos y validaciones con Pydantic
+│   │   ├── libro_model.py           # Modelos para libros 
+│   │   └── usuario_model.py         # Modelos para usuarios 
 │   │
-│   ├── routes/             # Rutas/endpoints de la API
+│   ├── repositories/               # Acceso a datos 
+│   │   ├── libro_repository.py      # Funciones para CRUD de libros
+│   │   └── usuario_repository.py    # Funciones para CRUD de usuarios
 │   │
-│   ├── services/           # Lógica de negocio
+│   ├── routes/                      # Rutas de la API
+│   │   ├── libros.py                # Ruta de libros
+│   │   └── usuarios.py              # Ruta de usuarios
 │   │
-│   ├── utils/              # Utilidades varias
+│   ├── services/                    # Lógica de negocio del proyecto
+│   │   ├── libro_service.py         # Reglas y validaciones para libros
+│   │   └── usuario_service.py       # Reglas y validaciones para usuarios
 │   │
-│   ├── schemas/            # Validacion de datos
-
+│   ├── utils/                       # Utilidades generales
+│   │   └── json_handler.py          # Funciones para leer/escribir archivos JSON
+│   │
+│   └── data/                        # Archivos de persistencia (base de datos JSON)
+│       ├── libros.json              # Base de datos simulada de libros
+│       └── usuarios.json            # Base de datos simulada de usuarios
+│
+├── .env                             # Variables de entorno 
+├── main.py                          # Punto de entrada del proyecto (inicia FastAPI)
+├── requirements.txt                 # Lista de dependencias del proyecto
+├── README.md                        # Documentación general del proyecto
+└── .gitignore                       # Archivos y carpetas que git debe ignorar
 
 ## pasos para ejecutar:
 
@@ -67,6 +84,7 @@ biblioteca-colectiva/
 
 - pip install email-validator
 - pip install uvicorn
+
 4- Ejecuta el servidor:
 
 python -m uvicorn main:app --reload
@@ -76,14 +94,4 @@ python -m uvicorn main:app --reload
 Swagger UI: http://127.0.0.1:8000/docs
 
 
-source venv/Scripts/activate
-python -m uvicorn main:app --reload
-
-# Agregar todos los archivos modificados y nuevos
-git add .
-
-# Confirmar con un mensaje claro
-git commit -m "Actualizo controlador y servicio de libros, README, y archivos JSON"
-
-# Subir al repositorio remoto en la rama master
-git push origin master
+#################### Autor: Daniel Videla ####################
